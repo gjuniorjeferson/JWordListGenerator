@@ -8,6 +8,7 @@ package gui;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import tools.Gen;
 
@@ -37,7 +38,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jBotãoGerar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jBotãoProcurar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jCampoCaminho = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -47,6 +47,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         naEsquerda = new javax.swing.JTextField();
         direita = new javax.swing.JRadioButton();
         esquerda = new javax.swing.JRadioButton();
+        jTamanho = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerador de Dicionarios");
@@ -67,8 +68,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 jBotãoProcurarActionPerformed(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3", "4", "5", "6", "7", "8" }));
 
         jLabel2.setText("Local da WordList");
 
@@ -122,6 +121,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTamanho.setText("1000");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,30 +130,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBotãoGerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jCampoCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBotãoProcurar, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)))
+                        .addComponent(jBotãoProcurar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -186,12 +188,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jBotãoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotãoGerarActionPerformed
         Gen gerador = new Gen();
-        if (esquerda.isSelected()) {
-            gerador.geraDicionario(jCampoCaminho.getText(), (String) jComboBox1.getSelectedItem(), naEsquerda.getText(), "");            
+        try {
+            int i = Integer.parseInt(jTamanho.getText());
+            if (esquerda.isSelected()) {
+                gerador.geraDicionario(jCampoCaminho.getText(), Integer.parseInt(jTamanho.getText()), naEsquerda.getText(), "");            
+            }
+            if (direita.isSelected()) {   
+                gerador.geraDicionario(jCampoCaminho.getText(), Integer.parseInt(jTamanho.getText()), "", naDireita.getText()); 
+            }  
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error, verifique se o tamanho foi digitado corretamente");    
         }
-        if (direita.isSelected()) {   
-            gerador.geraDicionario(jCampoCaminho.getText(), (String) jComboBox1.getSelectedItem(), "", naDireita.getText()); 
-        }  
     }//GEN-LAST:event_jBotãoGerarActionPerformed
 
     private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
@@ -240,12 +247,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jBotãoGerar;
     private javax.swing.JButton jBotãoProcurar;
     private javax.swing.JTextField jCampoCaminho;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTamanho;
     private javax.swing.JTextField naDireita;
     private javax.swing.JTextField naEsquerda;
     // End of variables declaration//GEN-END:variables
