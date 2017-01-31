@@ -174,12 +174,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBotãoProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotãoProcurarActionPerformed
-
+     
         try {
-        JFileChooser fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser();       
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de texto .TXT", "txt"); 
         fc.setFileFilter(filter);
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); //somente diretorios
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY); //somente diretorios
         fc.showOpenDialog(this); //abre o filechooser
         File f = fc.getSelectedFile();
         jCampoCaminho.setText(f.getPath());            
@@ -195,9 +195,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
             if (direita.isSelected()) {   
                 gerador.geraDicionario(jCampoCaminho.getText(), Integer.parseInt(jTamanho.getText()), "", naDireita.getText()); 
-            }  
+            }
+            JOptionPane.showMessageDialog(null, "Gerado com sucesso");
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error, verifique se o tamanho foi digitado corretamente");    
+            JOptionPane.showMessageDialog(null, "Verifique se o tamanho foi digitado corretamente");    
         }
     }//GEN-LAST:event_jBotãoGerarActionPerformed
 

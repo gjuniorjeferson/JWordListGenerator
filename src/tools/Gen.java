@@ -24,19 +24,13 @@ public class Gen {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho));
             
             for (int i = 0; i < tamanho;i++){
-                String senha = "" + i, stringTamanho = ""+tamanho;
-                
+                String senha = "" + i, stringTamanho = ""+tamanho;               
                 while (senha.length() < stringTamanho.length()-1){
                     senha = "0" + senha;
                 }
-                if (esquerda.equals("")) {
-                    buffWrite.write(senha + direita);                   
-                }
-                if (direita.equals("")) {
-                    buffWrite.write(esquerda + senha);
-                }               
+                    buffWrite.write(esquerda + senha + direita);                           
                 buffWrite.newLine();
-            }  
+            }            
             buffWrite.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex); 
